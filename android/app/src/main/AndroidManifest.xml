@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.gyzu_cinema">
+    <uses-permission android:name="android.permission.INTERNET" />
+
    <application
         android:label="gyzu_cinema"
         android:icon="@mipmap/ic_launcher">
