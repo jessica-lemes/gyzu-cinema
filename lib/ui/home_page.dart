@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gyzu_cinema/ui/select_event_page.dart';
+import 'package:gyzu_cinema/ui/ticket_page.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: _getGifs,
           ),
         ],
-        title:Image.asset('icons/logoRed.jpg', width: 100, alignment: Alignment.topRight,),
+        title:Image.asset('assets/icons/logoRed.jpg', width: 100, alignment: Alignment.topRight,),
       ),
       backgroundColor: Colors.white,
       body: Column(
@@ -77,7 +78,6 @@ class _HomePageState extends State<HomePage> {
                 });
               },
             ),
-
           ),
           Expanded(
             child: FutureBuilder(
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                         height: 200.0,
                         alignment: Alignment.center,
                         child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
                           strokeWidth: 5.0,
                         ),
                       );
@@ -121,8 +121,9 @@ class _HomePageState extends State<HomePage> {
         padding: EdgeInsets.all(10.0),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(//organizacao dos itens
             crossAxisCount: 2,
-            crossAxisSpacing: 10.0,
-            mainAxisSpacing: 10.0
+            crossAxisSpacing: 20.0,
+            mainAxisSpacing: 10.0,
+            childAspectRatio: 0.65,
         ),
         itemCount: _getCount(snapshot.data["data"]),
         itemBuilder: (context, index){ //posicao dos itens
@@ -141,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                     MaterialPageRoute(builder: (context) => GifPage(snapshot.data["data"][index]))//dados do gif clicado
                 );*/
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SelectEvent())//dados do gif clicado
+                    MaterialPageRoute(builder: (context) => TicketPage())//dados do gif clicado
                 );
               },
               onLongPress: (){
