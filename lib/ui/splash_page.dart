@@ -25,8 +25,8 @@ class SplashPage extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/icons/logoWhite.png"),
-              fit: BoxFit.none,
+              image: AssetImage("assets/images/bkgSplash.jpg"),
+              fit: BoxFit.cover,
             ),
           ),
         ),

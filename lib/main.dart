@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gyzu_cinema/ui/home_page.dart';
 import 'package:gyzu_cinema/ui/qrCodePage.dart';
 import 'package:gyzu_cinema/ui/splash_page.dart';
 import 'package:gyzu_cinema/ui/ticket_page.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
             textTheme: ButtonTextTheme.primary,
           )
       ),
-      home: TicketPage(),
+      home: SplashPage(),
     );
   }
 }

@@ -17,19 +17,28 @@ class _HomePageState extends State<HomePage> {
 
   String? _search;
 
+  final _language = "en-US";
+  final _region = "BR";
+
+  final _apiUrl = "https://api.themoviedb.org/3/";
+  final _key = "?api_key=54c7f6d6359cf02cbe352e75e68189d7";
+
+  final _urlImage = "https://image.tmdb.org/t/p/original";
+
   int _offset = 0;
 
   //requisição da api
-  Future<Map> _getGifs() async {
+  Future<Map> _getFilmes() async {
     http.Response response;
 
     //tipos de resposta
     if(_search == null || _search!.isEmpty)
-      response = await http.get("https://api.giphy.com/v1/gifs/search?api_key=zswb6bZl4awKgJiFsoJR6rkMitjAPNUW&q=movie&limit=25&offset=0&rating=g&lang=en");
-    else                                                                                                          //pesquisa             //valor de offset
-      response = await http.get("https://api.giphy.com/v1/gifs/search?api_key=wusbFwUExpkztfjeMr3QRimPUc4kd1J9&q=$_search&limit=19&offset=$_offset&rating=G&lang=en");
+      response = await http.get("${_apiUrl}movie/popular${_key}&language=${_language}&page=1");
+    else
+      response = await http.get("${_apiUrl}search/movie${_key}&language=${_language}&query=${_search}");
 
-    return json.decode(response.body);//conserve os dados em json
+    return json.decode(response.body);
+
   }
 
 
@@ -37,7 +46,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    _getGifs().then((map){
+    _getFilmes().then((map){
       print(map);
     });
   }
@@ -53,7 +62,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             icon: Icon(Icons.person),
-            onPressed: _getGifs,
+            onPressed: _getFilmes,
           ),
         ],
         title:Image.asset('assets/icons/logoRed.jpg', width: 100, alignment: Alignment.topRight,),
@@ -81,7 +90,7 @@ class _HomePageState extends State<HomePage> {
           ),
           Expanded(
             child: FutureBuilder(
-                future: _getGifs(),
+                future: _getFilmes(),
                 builder: (context, snapshot){
                   switch(snapshot.connectionState){
                     case ConnectionState.waiting:
@@ -97,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     default:
                       if(snapshot.hasError) return Container();
-                      else return _createGifTable(context, snapshot);
+                      else return _createFilmesTable(context, snapshot);
                   }
                 }
             ),
@@ -107,47 +116,43 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  int _getCount(List data){
+/*  int _getCount(List data){
     if(_search == null){
       return data.length;
     } else {
       return data.length + 1;
     }
-  }
+  }*/
 
 //modelo tabela que aparecera
-  Widget _createGifTable(BuildContext context, AsyncSnapshot snapshot){
+  Widget _createFilmesTable(BuildContext context, AsyncSnapshot snapshot){
     return GridView.builder(//formato grid
         padding: EdgeInsets.all(10.0),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(//organizacao dos itens
-            crossAxisCount: 2,
-            crossAxisSpacing: 20.0,
-            mainAxisSpacing: 10.0,
-            childAspectRatio: 0.65,
+          crossAxisCount: 2,
+          crossAxisSpacing: 20.0,
+          mainAxisSpacing: 10.0,
+          childAspectRatio: 0.65,
         ),
-        itemCount: _getCount(snapshot.data["data"]),
+        //itemCount: _getCount(snapshot.data["data"]),
         itemBuilder: (context, index){ //posicao dos itens
-          if(_search == null || index < snapshot.data["data"].length)
+          if(_search == null || index < snapshot.data["results"].length)
             return GestureDetector( //possibilita clicar na imagem
               //suavisar o carregamnto
               child: FadeInImage.memoryNetwork(
                 placeholder: kTransparentImage,
-                image: snapshot.data["data"][index]["images"]["fixed_height"]["url"], //caminho do json
+                image: _urlImage+snapshot.data["results"][index]["poster_path"], //caminho do json
                 height: 300.0,
                 fit: BoxFit.cover,
               ),
               onTap: (){
-                // on tap > ao clicar no gif direciona para  a pag de dealhes
-                /*Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => GifPage(snapshot.data["data"][index]))//dados do gif clicado
-                );*/
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => TicketPage())//dados do gif clicado
                 );
               },
               onLongPress: (){
                 //plugin share
-                Share.share(snapshot.data["data"][index]["images"]["fixed_height"]["url"]);
+                Share.share(snapshot.data["results"][index]["images"]["fixed_height"]["url"]);
               },
             );
           else
