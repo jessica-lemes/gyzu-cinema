@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gyzu_cinema/ui/movie_detail.dart';
 import 'package:gyzu_cinema/ui/select_event_page.dart';
 import 'package:gyzu_cinema/ui/ticket_page.dart';
 import 'dart:async';
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   int _offset = 0;
 
   //requisição da api
-  Future<Map> _getFilmes() async {
+  Future<Map> _getMovies() async {
     http.Response response;
 
     //tipos de resposta
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    _getFilmes().then((map){
+    _getMovies().then((map){
       print(map);
     });
   }
@@ -62,7 +63,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             icon: Icon(Icons.person),
-            onPressed: _getFilmes,
+            onPressed: _getMovies,
           ),
         ],
         title:Image.asset('assets/icons/logoRed.jpg', width: 100, alignment: Alignment.topRight,),
@@ -90,7 +91,7 @@ class _HomePageState extends State<HomePage> {
           ),
           Expanded(
             child: FutureBuilder(
-                future: _getFilmes(),
+                future: _getMovies(),
                 builder: (context, snapshot){
                   switch(snapshot.connectionState){
                     case ConnectionState.waiting:
@@ -106,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     default:
                       if(snapshot.hasError) return Container();
-                      else return _createFilmesTable(context, snapshot);
+                      else return _createMoviesTable(context, snapshot);
                   }
                 }
             ),
@@ -125,7 +126,7 @@ class _HomePageState extends State<HomePage> {
   }*/
 
 //modelo tabela que aparecera
-  Widget _createFilmesTable(BuildContext context, AsyncSnapshot snapshot){
+  Widget _createMoviesTable(BuildContext context, AsyncSnapshot snapshot){
     return GridView.builder(//formato grid
         padding: EdgeInsets.all(10.0),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(//organizacao dos itens
@@ -147,12 +148,12 @@ class _HomePageState extends State<HomePage> {
               ),
               onTap: (){
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => TicketPage())//dados do gif clicado
+                    MaterialPageRoute(builder: (context) => MovieDetail(snapshot.data["results"][index]))//dados do gif clicado
                 );
               },
               onLongPress: (){
                 //plugin share
-                Share.share(snapshot.data["results"][index]["images"]["fixed_height"]["url"]);
+                Share.share(snapshot.data["results"][index]["poster_path"]);
               },
             );
           else

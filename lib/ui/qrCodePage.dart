@@ -5,7 +5,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 class qrCodePage extends StatefulWidget {
 
   String data;
-  qrCodePage({required this.data});
+  qrCodePage({ required this.data});
 
 
   @override
@@ -49,9 +49,10 @@ class _State extends State<qrCodePage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.fromLTRB(90.0, 20.0,90.0, 20.0),
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(25.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   TextButton(
                       onPressed: (){
