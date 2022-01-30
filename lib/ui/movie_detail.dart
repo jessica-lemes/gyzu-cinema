@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gyzu_cinema/ui/ticket_page.dart';
 import 'package:share/share.dart';
+
+import 'home_page.dart';
 
 class MovieDetail extends StatelessWidget {
 
@@ -30,11 +33,10 @@ class MovieDetail extends StatelessWidget {
         ],
       ),
       backgroundColor: Colors.white,
-      body: Card(
-        child: Center(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
-/*          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,*/
             children: [
               Padding(
                 padding: EdgeInsets.all(10.0),
@@ -43,6 +45,7 @@ class MovieDetail extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(_movieData["title"],
+                  textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.black, fontSize: 30.0,),
                 ),
               ),
@@ -62,14 +65,69 @@ class MovieDetail extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.all(10),
-                    child: Text("Selecione sua poltrona:",
-                      style: TextStyle(color: Colors.black, fontSize: 20.0,),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
                     child:
                     Image.asset('assets/images/imgPoltronas.png', width: 300.0, alignment: Alignment.center, fit: BoxFit.cover ,),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: TextButton(
+                          onPressed: (){
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => HomePage())
+                            );
+                          },
+                          style: TextButton.styleFrom(
+                              elevation: 10,
+                              backgroundColor: Colors.white60,
+                              fixedSize: const Size(150, 40),
+                              primary: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              )
+                          ) ,
+                          child: const Text(
+                            'Voltar',
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: TextButton(
+                          onPressed: (){
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => TicketPage()) //IR PARA TELA DE INGRESSO
+                            );
+                          },
+                          style: TextButton.styleFrom(
+                              elevation: 10,
+                              backgroundColor: Colors.red,
+                              fixedSize: const Size(150, 40),
+                              primary: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              )
+                          ) ,
+                          child: const Text(
+                            'Avançar',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ),
+                      ),
+
+
+                    ],
                   ),
                 ],
               ),

@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -26,8 +27,6 @@ class _HomePageState extends State<HomePage> {
 
   final _urlImage = "https://image.tmdb.org/t/p/original";
 
-  int _offset = 0;
-
   //requisição da api
   Future<Map> _getMovies() async {
     http.Response response;
@@ -44,7 +43,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
     _getMovies().then((map){
     });
   }
@@ -72,26 +70,33 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.all(10.0),
             child: TextField(
               decoration: InputDecoration(
-                  labelText: "Escolha um filme",
-                  labelStyle: TextStyle(color: Colors.black),
-                  border: OutlineInputBorder()
+                labelText: "Busque seu filme",
+/*                  icon: IconButton(onPressed: () {
+                    _getMovies;
+                  }, icon: Icon(Icons.search),),*/
+                labelStyle: TextStyle(color: Colors.black),
+                border: OutlineInputBorder(),
               ),
               style: TextStyle(color: Colors.black, fontSize: 18.0),
-              textAlign: TextAlign.center,
               onSubmitted: (text){  //botao pesquisar o texto digitado
                 setState(() {
                   _search = text;
-                  _offset = 0;//nova pesquisa resseta o offset
+                  //_offset = 0;//nova pesquisa resseta o offset
                 });
               },
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Text(
-              "Em cartaz",
-              style: TextStyle(color: Colors.black, fontSize: 18.0),
-            ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0),
+                child: Text(
+                  "Em cartaz",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(color: Colors.black, fontSize: 20.0,),
+                ),
+              ),
+            ],
           ),
           Expanded(
             child: FutureBuilder(
@@ -121,25 +126,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-/*  int _getCount(List data){
+  int _getCount(List data){
     if(_search == null){
       return data.length;
     } else {
       return data.length + 1;
     }
-  }*/
+  }
 
 //modelo tabela que aparecera
   Widget _createMoviesTable(BuildContext context, AsyncSnapshot snapshot){
     return GridView.builder(//formato grid
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(20.0),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(//organizacao dos itens
           crossAxisCount: 2,
-          crossAxisSpacing: 20.0,
-          mainAxisSpacing: 10.0,
+          crossAxisSpacing: 10.0,
+          mainAxisSpacing: 5.0,
           childAspectRatio: 0.65,
         ),
-        //itemCount: _getCount(snapshot.data["data"]),
+        itemCount: _getCount(snapshot.data["results"]),
         itemBuilder: (context, index){ //posicao dos itens
           if(_search == null || index < snapshot.data["results"].length)
             return GestureDetector( //possibilita clicar na imagem
@@ -152,15 +157,28 @@ class _HomePageState extends State<HomePage> {
               ),
               onTap: (){
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MovieDetail(snapshot.data["results"][index]))//dados do gif clicado
+                    MaterialPageRoute(builder: (context) => MovieDetail(snapshot.data["results"][index]))//dados do filme clicado
                 );
               },
-/*              onLongPress: (){
-                //plugin share
-                Share.share(snapshot.data["results"][index]["poster_path"]);
-              },*/
             );
           else
+            return Container(
+              child: GestureDetector(//clicar na imagem
+                child: Column(//botao para carregar +
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.arrow_upward, color: Colors.black, size: 30.0,),
+                    Text("Voltar para o topo",
+                      style: TextStyle(color: Colors.black, fontSize: 20.0),)
+                  ],
+                ),
+                onTap: (){
+                  setState(() {
+                  });
+                },
+              ),
+            );
+/*          else
             return Container(
               child: GestureDetector(//clicar na imagem
                 child: Column(//botao para carregar +
@@ -177,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                   });
                 },
               ),
-            );
+            );*/
         }
     );
   }
