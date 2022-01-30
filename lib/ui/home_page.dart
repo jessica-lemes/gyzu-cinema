@@ -39,16 +39,13 @@ class _HomePageState extends State<HomePage> {
       response = await http.get("${_apiUrl}search/movie${_key}&language=${_language}&query=${_search}");
 
     return json.decode(response.body);
-
   }
-
 
   @override
   void initState() {
     super.initState();
 
     _getMovies().then((map){
-      print(map);
     });
   }
 
@@ -57,7 +54,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.red,
         ),
         actions: [
@@ -87,6 +84,13 @@ class _HomePageState extends State<HomePage> {
                   _offset = 0;//nova pesquisa resseta o offset
                 });
               },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Text(
+              "Em cartaz",
+              style: TextStyle(color: Colors.black, fontSize: 18.0),
             ),
           ),
           Expanded(
@@ -151,10 +155,10 @@ class _HomePageState extends State<HomePage> {
                     MaterialPageRoute(builder: (context) => MovieDetail(snapshot.data["results"][index]))//dados do gif clicado
                 );
               },
-              onLongPress: (){
+/*              onLongPress: (){
                 //plugin share
                 Share.share(snapshot.data["results"][index]["poster_path"]);
-              },
+              },*/
             );
           else
             return Container(
@@ -162,9 +166,9 @@ class _HomePageState extends State<HomePage> {
                 child: Column(//botao para carregar +
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Icon(Icons.add, color: Colors.white, size: 70.0,),
+                    Icon(Icons.add, color: Colors.black, size: 70.0,),
                     Text("Carregar mais...",
-                      style: TextStyle(color: Colors.white, fontSize: 22.0),)
+                      style: TextStyle(color: Colors.black, fontSize: 22.0),)
                   ],
                 ),
                 onTap: (){ //ao clicar no carregar +
