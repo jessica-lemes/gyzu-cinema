@@ -71,9 +71,10 @@ class _HomePageState extends State<HomePage> {
             child: TextField(
               decoration: InputDecoration(
                 labelText: "Busque seu filme",
-/*                  icon: IconButton(onPressed: () {
-                    _getMovies;
-                  }, icon: Icon(Icons.search),),*/
+                suffixIcon: Icon(
+                  Icons.search,
+                  color: Colors.black,
+                ),
                 labelStyle: TextStyle(color: Colors.black),
                 border: OutlineInputBorder(),
               ),
@@ -81,7 +82,6 @@ class _HomePageState extends State<HomePage> {
               onSubmitted: (text){  //botao pesquisar o texto digitado
                 setState(() {
                   _search = text;
-                  //_offset = 0;//nova pesquisa resseta o offset
                 });
               },
             ),

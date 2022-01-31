@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gyzu_cinema/ui/ticket_page.dart';
+import 'package:gyzu_cinema/ui/ticket_page.dart';
 import 'package:share/share.dart';
 
 import 'home_page.dart';
@@ -12,10 +13,12 @@ class MovieDetail extends StatelessWidget {
 
   var api_imageURL = "https://image.tmdb.org/t/p/original/";
 
+  String data = "15/03/2022 - 19h";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+     /* appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(
           color: Colors.red,
@@ -31,22 +34,23 @@ class MovieDetail extends StatelessWidget {
             },
           )
         ],
-      ),
+      ),*/
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(top:40.0),
           child: Column(
             children: [
               Padding(
                 padding: EdgeInsets.all(10.0),
-                child: Image.network(api_imageURL+_movieData["backdrop_path"], width: 200.0, height: 300.0, fit: BoxFit.cover,),
+                child: Image.network(api_imageURL+_movieData["backdrop_path"], height: 200.0,
+                  width: 500.0,  fit: BoxFit.contain,),
               ),
               Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(_movieData["title"],
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black, fontSize: 30.0,),
+                  style: TextStyle(color: Colors.black, fontSize: 18.0,),
                 ),
               ),
               Column(
@@ -59,7 +63,7 @@ class MovieDetail extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.all(10),
-                    child: Text("CHECKBOX DE HORARIOS AQUI",
+                    child: Text("Data: $data",
                       style: TextStyle(color: Colors.black, fontSize: 20.0,),
                     ),
                   ),
@@ -72,7 +76,7 @@ class MovieDetail extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: TextButton(
                           onPressed: (){
                             Navigator.push(context,
@@ -99,11 +103,12 @@ class MovieDetail extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: TextButton(
                           onPressed: (){
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => TicketPage()) //IR PARA TELA DE INGRESSO
+                                MaterialPageRoute(builder: (context) => TicketPage(_movieData) //IR PARA TELA DE INGRESSO
+                            )
                             );
                           },
                           style: TextButton.styleFrom(
