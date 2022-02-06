@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gyzu_cinema/ui/home_page.dart';
+import 'package:gyzu_cinema/ui/select_login_page.dart';
 import 'package:gyzu_cinema/ui/movie_detail.dart';
 import 'package:gyzu_cinema/ui/qrCodePage.dart';
 import 'package:gyzu_cinema/ui/splash_page.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
             textTheme: ButtonTextTheme.primary,
           )
       ),
-      home:SplashPage(),
+      home:SelectLoginPage(),
     );
   }
 }

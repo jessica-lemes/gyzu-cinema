@@ -107,7 +107,6 @@ class _State extends State<qrCodePage> {
                   ),
                 ),
 
-
               ],
             ),
           ],

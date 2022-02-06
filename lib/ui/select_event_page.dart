@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gyzu_cinema/ui/home_page.dart';
 
-
 class SelectEvent extends StatefulWidget {
   const SelectEvent({Key? key}) : super(key: key);
 
