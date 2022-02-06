@@ -66,11 +66,13 @@ class _SelectEventState extends State<SelectEvent> {
               children: [
                 TextButton(
                   onPressed: (){
-/*                    MaterialPageRoute(
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage())//dados do gif clicado
+                    );
+                   /* MaterialPageRoute(
                         builder: (context)=>HomePage()//Passando para a proxima tela
                     );
                     Navigator.pop(context);*/
-
                   },
                   style: TextButton.styleFrom(
                     elevation: 10,
