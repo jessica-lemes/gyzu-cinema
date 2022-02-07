@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gyzu_cinema/ui/select_event_page.dart';
+import 'package:gyzu_cinema/ui/select_login_page.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 class SplashPage extends StatelessWidget {
@@ -19,7 +20,7 @@ class SplashPage extends StatelessWidget {
               Color(0xff93291E)
             ],
           ),
-          navigateAfterSeconds: SelectEvent(),
+          navigateAfterSeconds: SelectLoginPage(),
           loaderColor: Colors.transparent,
         ),
         Container(

@@ -67,7 +67,7 @@ class _SelectEventState extends State<SelectEvent> {
                 TextButton(
                   onPressed: (){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage())//dados do gif clicado
+                        MaterialPageRoute(builder: (context) => HomePage())
                     );
                    /* MaterialPageRoute(
                         builder: (context)=>HomePage()//Passando para a proxima tela
