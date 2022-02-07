@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gyzu_cinema/ui/select_event_page.dart';
 
 import 'home_page.dart';
+import 'login_page.dart';
 
 class SelectLoginPage extends StatefulWidget {
   const SelectLoginPage({Key? key}) : super(key: key);
@@ -59,7 +60,11 @@ class _SelectLoginPageState extends State<SelectLoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomePage())
+                      );
+                    },
                     style: TextButton.styleFrom(
                         elevation: 10,
                         backgroundColor: Colors.red,
@@ -88,12 +93,8 @@ class _SelectLoginPageState extends State<SelectLoginPage> {
                   TextButton(
                     onPressed: (){
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => SelectEvent())//dados do gif clicado
+                          MaterialPageRoute(builder: (context) => HomePage())
                       );
-                      /* MaterialPageRoute(
-                        builder: (context)=>HomePage()//Passando para a proxima tela
-                    );
-                    Navigator.pop(context);*/
                     },
                     style: TextButton.styleFrom(
                       elevation: 10,
@@ -119,7 +120,7 @@ class _SelectLoginPageState extends State<SelectLoginPage> {
             TextButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SelectEvent())//dados do gif clicado
+                    MaterialPageRoute(builder: (context) => LoginPage())
                 );
               },
               child: Text(
